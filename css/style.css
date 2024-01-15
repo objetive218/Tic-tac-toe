@@ -3,3 +3,20 @@
     margin: 0;
     box-sizing: border-box;
 }
+#main {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#main > div{
+    display: grid;
+    width: 700px;
+    height: 700px;
+    grid-template: 1fr 1fr 1fr/ 1fr 1fr 1fr;
+    background-color: aqua;
+}
+#main > div > div{
+    border: solid red 1px;
+}
