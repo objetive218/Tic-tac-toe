@@ -26,6 +26,11 @@ const gameBoard = (function () {
 
   const checkBoard = () => {
     switch (true) {
+      case board.some((e) => {
+        return e.playerFigure === null;
+      }) === false:
+        console.log("it´s a tie");
+        break;
       case board[0].playerFigure === "x" &&
         board[1].playerFigure === "x" &&
         board[2].playerFigure === "x":
@@ -65,11 +70,6 @@ const gameBoard = (function () {
         b2 === "x" &&
         board[2].playerFigure === "x":
         console.log("win x.c");
-        break;
-      case board.filter((e) => {
-        e.playerFigure === null;
-      }) === null:
-        console.log("it´s a tie");
         break;
       default:
         console.log("play continue");
