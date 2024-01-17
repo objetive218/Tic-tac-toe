@@ -23,44 +23,44 @@ const gameBoard = (function () {
       }) === false:
         console.log("it´s a tie");
         break;
-      case board[0].playerFigure === "x" &&
-        board[1].playerFigure === "x" &&
-        board[2].playerFigure === "x":
+      case board[0].playerFigure === player &&
+        board[1].playerFigure === player &&
+        board[2].playerFigure === player:
         console.log("win f.a");
         break;
-      case board[3].playerFigure === "x" &&
-        board[4].playerFigure === "x" &&
-        board[5].playerFigure === "x":
+      case board[3].playerFigure === player &&
+        board[4].playerFigure === player &&
+        board[5].playerFigure === player:
         console.log("win f.b");
         break;
-      case board[6].playerFigure === "x" &&
-        board[7].playerFigure === "x" &&
-        board[8].playerFigure === "x":
+      case board[6].playerFigure === player &&
+        board[7].playerFigure === player &&
+        board[8].playerFigure === player:
         console.log("win f.c");
         break;
-      case board[0].playerFigure === "x" &&
-        board[3].playerFigure === "x" &&
-        board[6].playerFigure === "x":
+      case board[0].playerFigure === player &&
+        board[3].playerFigure === player &&
+        board[6].playerFigure === player:
         console.log("win c.board[0].position");
         break;
-      case board[1].playerFigure === "x" &&
-        board[4].playerFigure === "x" &&
-        board[7].playerFigure === "x":
+      case board[1].playerFigure === player &&
+        board[4].playerFigure === player &&
+        board[7].playerFigure === player:
         console.log("win c.board[1].position");
         break;
-      case board[2].playerFigure === "x" &&
-        board[5].playerFigure === "x" &&
-        board[8].playerFigure === "x":
+      case board[2].playerFigure === player &&
+        board[5].playerFigure === player &&
+        board[8].playerFigure === player:
         console.log("win c.board[2].position");
         break;
-      case board[0].playerFigure === "x" &&
-        board[4].playerFigure === "x" &&
-        board[8].playerFigure === "x":
+      case board[0].playerFigure === player &&
+        board[4].playerFigure === player &&
+        board[8].playerFigure === player:
         console.log("win x.a");
         break;
-      case board[6].playerFigure === "x" &&
-        b2 === "x" &&
-        board[2].playerFigure === "x":
+      case board[6].playerFigure === player &&
+        board[5].playerFigure === player &&
+        board[2].playerFigure === player:
         console.log("win x.c");
         break;
       default:
@@ -85,9 +85,9 @@ const play = (function () {
     let playerTurn = player1.turn ? player1 : player2;
     let queryaVar = document.getElementById("");
     board[e.target.value].playerFigure = playerTurn.figure;
-    checkBoard(playerTurn);
+    checkBoard(playerTurn.figure);
     console.log(e.target.value);
-    console.log(board[e.target.value].playerFigure);
+    console.log(board);
 
     player1.turn ? (player1.turn = false) : (player1.turn = true);
     player2.turn === false ? (player2.turn = true) : (player2.turn = false);
@@ -100,13 +100,6 @@ const player1 = play.createPlayer("player 1", "x", true);
 const player2 = play.createPlayer("player 2", "o", false);
 console.log(player1.figure, player1.turn);
 console.log(player2.figure);
-
-gameBoard.board[0].playerFigure = "x";
-gameBoard.checkBoard();
-gameBoard.board[1].playerFigure = "x";
-gameBoard.checkBoard();
-gameBoard.board[2].playerFigure = "x";
-gameBoard.checkBoard();
 
 //verificar que en el array no existan 3 figuras seguidad
 // switch que tenga los caso de victoria y solo cambie la figura en la veificacion (8 casos)
