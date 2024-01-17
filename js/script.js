@@ -1,14 +1,6 @@
 const main = document.querySelector("#main");
 const box = document.querySelector("#box");
 
-const player = function (name, figure) {
-  let points = 0;
-  let turn = null;
-  const givePoint = () => points++;
-
-  return { name, figure, points, givePoint, turn };
-};
-
 const gameBoard = (function () {
   let board = [
     { position: "a1", playerFigure: null },
@@ -24,7 +16,7 @@ const gameBoard = (function () {
 
   //let boardPosition = { a1, a2, a3, b1, b2, b3, c1, c2, c3 };
 
-  const checkBoard = () => {
+  const checkBoard = (player) => {
     switch (true) {
       case board.some((e) => {
         return e.playerFigure === null;
@@ -79,6 +71,36 @@ const gameBoard = (function () {
   return { checkBoard, board };
 })();
 
+const play = (function () {
+  const { checkBoard, board } = gameBoard;
+  function createPlayer(name, figure, turn) {
+    let points = 0;
+    const givePoint = () => points++;
+
+    return { name, figure, givePoint, points, turn };
+  }
+
+  function game(e) {
+    e.preventDefault();
+    let playerTurn = player1.turn ? player1 : player2;
+    let queryaVar = document.getElementById("");
+    board[e.target.value].playerFigure = playerTurn.figure;
+    checkBoard(playerTurn);
+    console.log(e.target.value);
+    console.log(board[e.target.value].playerFigure);
+
+    player1.turn ? (player1.turn = false) : (player1.turn = true);
+    player2.turn === false ? (player2.turn = true) : (player2.turn = false);
+  }
+
+  return { createPlayer, game };
+})();
+
+const player1 = play.createPlayer("player 1", "x", true);
+const player2 = play.createPlayer("player 2", "o", false);
+console.log(player1.figure, player1.turn);
+console.log(player2.figure);
+
 gameBoard.board[0].playerFigure = "x";
 gameBoard.checkBoard();
 gameBoard.board[1].playerFigure = "x";
@@ -89,3 +111,10 @@ gameBoard.checkBoard();
 //verificar que en el array no existan 3 figuras seguidad
 // switch que tenga los caso de victoria y solo cambie la figura en la veificacion (8 casos)
 //
+//assing events to divs
+
+let test = box.getElementsByTagName("button");
+for (let index = 0; index < test.length; index++) {
+  e = test[index];
+  e.addEventListener("click", play.game);
+}
