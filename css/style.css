@@ -17,6 +17,6 @@
     grid-template: 1fr 1fr 1fr/ 1fr 1fr 1fr;
     background-color: aqua;
 }
-#main #box > div{
+#main #box > button{
     border: solid red 1px;
 }
