@@ -2,7 +2,6 @@ const main = document.querySelector("#main");
 
 const gameBoard = (function () {
   const scoreBoard = document.querySelector("#score");
-  let winner = false;
   let board = [
     { position: "a1", playerFigure: null },
     { position: "a2", playerFigure: null },
@@ -35,9 +34,7 @@ const gameBoard = (function () {
         board[1].playerFigure === player &&
         board[2].playerFigure === player:
         scoreBoard.innerHTML = `Win ${name}!`;
-        winner = true;
         gameClear();
-        console.log(winner);
         break;
       case board[3].playerFigure === player &&
         board[4].playerFigure === player &&
@@ -82,11 +79,10 @@ const gameBoard = (function () {
         gameClear();
         break;
       default:
-        console.log("play continue");
         break;
     }
   };
-  return { checkBoard, board, scoreBoard, winner };
+  return { checkBoard, board, scoreBoard };
 })();
 
 const play = (function () {
@@ -95,6 +91,9 @@ const play = (function () {
     return { name, figure, turn };
   }
 
+  const player1 = createPlayer("Player 1", "x", true);
+  const player2 = createPlayer("Player 2", "o", false);
+
   function game(e) {
     e.preventDefault();
     let pjTurn = player1.turn ? player2 : player1;
@@ -102,7 +101,6 @@ const play = (function () {
     scoreBoard.innerHTML = `${pjTurn.name}´s turn`;
     board[e.target.value].playerFigure = playerTurn.figure;
     checkBoard(playerTurn.figure, playerTurn.name);
-    console.log(board);
     player1.turn ? (player1.turn = false) : (player1.turn = true);
     player2.turn === false ? (player2.turn = true) : (player2.turn = false);
   }
@@ -141,10 +139,10 @@ const play = (function () {
   }
   beginGame();
 
-  function refreshBoard(){
+  function refreshBoard() {
     board.forEach((e) => {
       e.playerFigure = null;
-    })
+    });
   }
   function reset() {
     const reset = document.querySelector("#reset");
@@ -160,9 +158,5 @@ const play = (function () {
     });
   }
   reset();
-  return { createPlayer, game, createGame, beginGame };
+  return { createPlayer, game, createGame, beginGame, player1, player2 };
 })();
-
-const player1 = play.createPlayer("Player 1", "x", true);
-const player2 = play.createPlayer("Player 2", "o", false);
-
