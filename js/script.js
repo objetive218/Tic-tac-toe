@@ -2,6 +2,8 @@ const main = document.querySelector("#main");
 const box = document.querySelector("#box");
 
 const gameBoard = (function () {
+  const scoreBoard = document.querySelector("#score");
+  let winner = false;
   let board = [
     { position: "a1", playerFigure: null },
     { position: "a2", playerFigure: null },
@@ -13,82 +15,85 @@ const gameBoard = (function () {
     { position: "c2", playerFigure: null },
     { position: "c3", playerFigure: null },
   ];
-
-  //let boardPosition = { a1, a2, a3, b1, b2, b3, c1, c2, c3 };
-
-  const checkBoard = (player) => {
+  function gameClear() {
+    for (let i = 0; i < buttonList.length; i++) {
+      actButton = buttonList[i];
+      let getId = actButton.id;
+      document.querySelector(`#${getId}`).disabled = true;
+    }
+  }
+  const checkBoard = (player, name) => {
     switch (true) {
       case board.some((e) => {
         return e.playerFigure === null;
       }) === false:
-        console.log("it´s a tie");
+        scoreBoard.innerHTML = "it´s a tie";
+
         break;
       case board[0].playerFigure === player &&
         board[1].playerFigure === player &&
         board[2].playerFigure === player:
-        console.log("win f.a");
+        scoreBoard.innerHTML = `Win ${name}`;
+        winner = true;
+        gameClear();
+        console.log(winner);
         break;
       case board[3].playerFigure === player &&
         board[4].playerFigure === player &&
         board[5].playerFigure === player:
-        console.log("win f.b");
+        scoreBoard.innerHTML = `Win ${name}`;
         break;
       case board[6].playerFigure === player &&
         board[7].playerFigure === player &&
         board[8].playerFigure === player:
-        console.log("win f.c");
+        scoreBoard.innerHTML = `Win ${name}`;
         break;
       case board[0].playerFigure === player &&
         board[3].playerFigure === player &&
         board[6].playerFigure === player:
-        console.log("win c.board[0].position");
+        scoreBoard.innerHTML = `Win ${name}`;
         break;
       case board[1].playerFigure === player &&
         board[4].playerFigure === player &&
         board[7].playerFigure === player:
-        console.log("win c.board[1].position");
+        scoreBoard.innerHTML = `Win ${name}`;
         break;
       case board[2].playerFigure === player &&
         board[5].playerFigure === player &&
         board[8].playerFigure === player:
-        console.log("win c.board[2].position");
+        scoreBoard.innerHTML = `Win ${name}`;
         break;
       case board[0].playerFigure === player &&
         board[4].playerFigure === player &&
         board[8].playerFigure === player:
-        console.log("win x.a");
+        scoreBoard.innerHTML = `Win ${name}`;
         break;
       case board[6].playerFigure === player &&
-        board[5].playerFigure === player &&
+        board[4].playerFigure === player &&
         board[2].playerFigure === player:
-        console.log("win x.c");
+        scoreBoard.innerHTML = `Win ${name}`;
         break;
       default:
         console.log("play continue");
         break;
     }
   };
-  return { checkBoard, board };
+  return { checkBoard, board, scoreBoard, winner };
 })();
 
 const play = (function () {
-  const { checkBoard, board } = gameBoard;
+  const { checkBoard, board, scoreBoard } = gameBoard;
   function createPlayer(name, figure, turn) {
-    let points = 0;
-    const givePoint = () => points++;
-
-    return { name, figure, givePoint, points, turn };
+    return { name, figure, turn };
   }
 
   function game(e) {
     e.preventDefault();
     let playerTurn = player1.turn ? player1 : player2;
-    let queryaVar = document.getElementById("");
+    scoreBoard.innerHTML = `${playerTurn.name}´s turn`;
     board[e.target.value].playerFigure = playerTurn.figure;
-    checkBoard(playerTurn.figure);
-    console.log(e.target.value);
+    checkBoard(playerTurn.figure, playerTurn.name);
     console.log(board);
-
     player1.turn ? (player1.turn = false) : (player1.turn = true);
     player2.turn === false ? (player2.turn = true) : (player2.turn = false);
   }
@@ -96,18 +101,28 @@ const play = (function () {
   return { createPlayer, game };
 })();
 
-const player1 = play.createPlayer("player 1", "x", true);
-const player2 = play.createPlayer("player 2", "o", false);
-console.log(player1.figure, player1.turn);
-console.log(player2.figure);
-
+const player1 = play.createPlayer("Player 1", "x", true);
+const player2 = play.createPlayer("Player 2", "o", false);
+console.log(player1.winner);
+console.log(player1.winner);
 //verificar que en el array no existan 3 figuras seguidad
-// switch que tenga los caso de victoria y solo cambie la figura en la veificacion (8 casos)
+// switch que tenga los caso de victoria y solo cambie la figura en la veificacion (8 casos) check
 //
-//assing events to divs
+//assign events to divs
 
-let test = box.getElementsByTagName("button");
-for (let index = 0; index < test.length; index++) {
-  e = test[index];
-  e.addEventListener("click", play.game);
+let buttonList = box.getElementsByTagName("button");
+for (let index = 0; index < buttonList.length; index++) {
+  actButton = buttonList[index];
+  let getId = actButton.id;
+  actButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (gameBoard.winner) {
+      document.querySelector(`#${getId}`).disabled = true;
+    } else {
+      play.game(e);
+      document.querySelector(`#${getId}`).innerHTML = player1.turn
+        ? player2.figure
+        : player1.figure;
+    }
+  });
 }
