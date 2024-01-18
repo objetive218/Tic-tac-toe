@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,200..1000&display=swap');
+
 *{
     padding: 0;
     margin: 0;
@@ -9,14 +11,29 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+#main #score{
+    display: flex;
+    width: 100vw;
+    height: 5%;
+    justify-content: center;
 }
 #main #box{
     display: grid;
     width: 700px;
     height: 700px;
     grid-template: 1fr 1fr 1fr/ 1fr 1fr 1fr;
-    background-color: aqua;
+    background-color: lightcoral;
+    
 }
 #main #box > button{
+    font-family: "Nunito", sans-serif;
+    font-style: italic;
     border: solid red 1px;
+    font-size: 150px;
+    border-radius: 10px;
+}
+#main #box>button:disabled{
+    background-color: rgb(238, 238, 238);
 }
