@@ -20,12 +20,11 @@ header{
 #main {
     width: 100vw;
     height: 90vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background-color: #87ceeb;
-    
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+    grid-template: 1fr 5fr 1fr / 1fr;
+    background-color: #87ceeb;  
 }
 #main #score{
     display: flex;
@@ -34,14 +33,15 @@ header{
     justify-content: center;
     color: #352006;
     font-size: 45px;
+    grid-row: 1/2;
 }
 #main #box{
     display: grid;
-    width: 680px;
-    height: 680px;
+    width: 640px;
+    height: 640px;
     grid-template: 1fr 1fr 1fr/ 1fr 1fr 1fr;
     background-color: #87ceeb;
-    
+    grid-row: 2/3;
 }
 #main #box > button{
     font-family: "Nunito", sans-serif;
@@ -55,4 +55,14 @@ header{
     background-color: #352006;
     color: #87ceeb;
     border: solid #87ceeb 2px;
+}
+#main #reset{
+    grid-row: 3/4;
+    width: 100px;
+    height: 45px;
+    border-radius: 20px;
+    border: solid #352006 1px;
+    background-color: #352006;
+    color: #87ceeb;
+    font-size: 20px;
 }
