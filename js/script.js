@@ -1,5 +1,4 @@
 const main = document.querySelector("#main");
-const box = document.querySelector("#box");
 
 const gameBoard = (function () {
   const scoreBoard = document.querySelector("#score");
@@ -16,6 +15,8 @@ const gameBoard = (function () {
     { position: "c3", playerFigure: null },
   ];
   function gameClear() {
+    const box = document.querySelector("#box");
+    const buttonList = box.getElementsByTagName("button");
     for (let i = 0; i < buttonList.length; i++) {
       actButton = buttonList[i];
       let getId = actButton.id;
@@ -105,44 +106,63 @@ const play = (function () {
     player1.turn ? (player1.turn = false) : (player1.turn = true);
     player2.turn === false ? (player2.turn = true) : (player2.turn = false);
   }
-  function createGame(){
-    main.innerHTML += `<div id="box">
-            <button id="zero" value="0" ></button>
-            <button id="one" value="1"></button>
-            <button id="two" value="2"></button>
-            <button id="three" value="3"></button>
-            <button id="four" value="4"></button>
-            <button id="five" value="5"></button>
-            <button id="six" value="6"></button>
-            <button id="sevent" value="7"></button>
-            <button id="eight" value="8"></button>
-        </div>`; 
+  function createGame() {
+    let div = document.createElement("div");
+    div.setAttribute("id", "box");
+    div.innerHTML = `<div id="box">
+    <button id="zero" value="0" ></button>
+    <button id="one" value="1"></button>
+    <button id="two" value="2"></button>
+    <button id="three" value="3"></button>
+    <button id="four" value="4"></button>
+    <button id="five" value="5"></button>
+    <button id="six" value="6"></button>
+    <button id="sevent" value="7"></button>
+    <button id="eight" value="8"></button>
+    </div>`;
+    main.appendChild(div);
   }
+  createGame();
 
+  function beginGame() {
+    const box = document.querySelector("#box");
+    const buttonList = box.getElementsByTagName("button");
+    for (let index = 0; index < buttonList.length; index++) {
+      actButton = buttonList[index];
+      let getId = actButton.id;
+      actButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        play.game(e);
+        document.querySelector(`#${getId}`).innerHTML = player1.turn
+          ? player2.figure
+          : player1.figure;
+      });
+    }
+  }
+  beginGame();
 
-  return { createPlayer, game, createGame };
+  function refreshBoard(){
+    board.forEach((e) => {
+      e.playerFigure = null;
+    })
+  }
+  function reset() {
+    const reset = document.querySelector("#reset");
+    reset.addEventListener("click", (e) => {
+      const box = document.querySelector("#box");
+      e.preventDefault();
+      box.innerHTML = "";
+      main.removeChild(box);
+      createGame();
+      beginGame();
+      refreshBoard();
+      scoreBoard.innerHTML = "Click to begin Player 1";
+    });
+  }
+  reset();
+  return { createPlayer, game, createGame, beginGame };
 })();
 
 const player1 = play.createPlayer("Player 1", "x", true);
 const player2 = play.createPlayer("Player 2", "o", false);
-console.log(player1.winner);
-console.log(player1.winner);
 
-let buttonList = box.getElementsByTagName("button");
-for (let index = 0; index < buttonList.length; index++) {
-  actButton = buttonList[index];
-  let getId = actButton.id;
-  actButton.addEventListener("click", (e) => {
-    e.preventDefault();
-    play.game(e);
-    document.querySelector(`#${getId}`).innerHTML = player1.turn
-      ? player2.figure
-      : player1.figure;
-  });
-}
-
-const reset = document.querySelector("#reset");
-reset.addEventListener("click", () => {
-  box.innerHTML = "";
-
-})
