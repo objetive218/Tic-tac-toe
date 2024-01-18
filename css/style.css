@@ -4,6 +4,18 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: "Nunito", sans-serif;
+}
+header{
+    width: 100vw;
+    height: 10vh;
+    background-color: #87ceeb;
+    color: #352006;
+    border-bottom: solid #352006 2px;
+    padding: 0px 0px 0px 50px;
+    align-items: center;
+    display: flex;
+    font-size: 30px;
 }
 #main {
     width: 100vw;
@@ -12,28 +24,35 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background-color: #87ceeb;
+    
 }
 #main #score{
     display: flex;
     width: 100vw;
-    height: 5%;
+    height: 8%;
     justify-content: center;
+    color: #352006;
+    font-size: 45px;
 }
 #main #box{
     display: grid;
-    width: 700px;
-    height: 700px;
+    width: 680px;
+    height: 680px;
     grid-template: 1fr 1fr 1fr/ 1fr 1fr 1fr;
-    background-color: lightcoral;
+    background-color: #87ceeb;
     
 }
 #main #box > button{
     font-family: "Nunito", sans-serif;
     font-style: italic;
-    border: solid red 1px;
+    border: solid #352006 1px;
     font-size: 150px;
     border-radius: 10px;
+    color: #352006;
 }
 #main #box>button:disabled{
-    background-color: rgb(238, 238, 238);
+    background-color: #352006;
+    color: #87ceeb;
+    border: solid #87ceeb 2px;
 }
